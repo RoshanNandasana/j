@@ -1,0 +1,58 @@
+class CPU {
+    double price;
+
+    CPU(double p) {
+        price = p;
+    }
+
+    class Processor {
+        double cores;
+        double cache;
+        String manufacturer;
+
+        Processor(double c, double ca, String m) {
+            cores = c;
+            cache = ca;
+            manufacturer = m;
+        }
+
+        double getCache() {
+            return cache;
+        }
+
+        void displayProcessorDetail() {
+            System.out.println("Processor: Cores=" + cores + ", Cache=" + cache + "MB, Manufacturer=" + manufacturer);
+        }
+    }
+
+    protected class RAM {
+        double memory;
+        String manufacturer;
+        Double clockSpeed;
+
+        RAM(double m, String manu, Double cs) {
+            memory = m;
+            manufacturer = manu;
+            clockSpeed = cs;
+        }
+
+        double getClockSpeed() {
+            return clockSpeed;
+        }
+
+        void displayRAMDetail() {
+            System.out.println("RAM: Memory=" + memory + "GB, ClockSpeed=" + clockSpeed + "MHz, Manufacturer=" + manufacturer);
+        }
+    }
+
+    public static void main(String[] args) {
+        CPU cpu = new CPU(299.99);
+        CPU.Processor proc = cpu.new Processor(8, 16, "Intel");
+        proc.displayProcessorDetail();
+        System.out.println("Processor Cache: " + proc.getCache() + "MB");
+        CPU.RAM ram = cpu.new RAM(32, "Corsair", 3200.0);
+        ram.displayRAMDetail();
+        System.out.println("RAM Clock Speed: " + ram.getClockSpeed() + "MHz");
+        System.out.println("CPU Price: $" + cpu.price);
+    }
+}

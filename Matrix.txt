@@ -1,0 +1,128 @@
+import java.util.Scanner;
+
+class Matrix {
+    private int rows, cols;
+    private float[][] matrix;
+
+    public Matrix() {
+        this.rows = 2;
+        this.cols = 2;
+        this.matrix = new float[rows][cols];
+    }
+
+    public Matrix(int[][] inputArray) {
+        this.rows = inputArray.length;
+        this.cols = inputArray[0].length;
+        this.matrix = new float[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                this.matrix[i][j] = inputArray[i][j];
+            }
+        }
+    }
+
+    public Matrix(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
+        this.matrix = new float[rows][cols];
+    }
+
+    public void inputMatrix() {
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrix[i][j] = scanner.nextFloat();
+            }
+        }
+    }
+
+    public float[][] calculateTranspose() {
+        float[][] transposed = new float[cols][rows];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+        return transposed;
+    }
+
+    public float[][] multiplyWith(Matrix other) {
+        if (this.cols != other.rows) {
+            throw new IllegalArgumentException("Matrix multiplication not possible");
+        }
+
+        float[][] result = new float[this.rows][other.cols];
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < other.cols; j++) {
+                for (int k = 0; k < this.cols; k++) {
+                    result[i][j] += this.matrix[i][k] * other.matrix[k][j];
+                }
+            }
+        }
+        return result;
+    }
+
+    public void printMatrix(float[][] mat) {
+        for (float[] row : mat) {
+            for (float val : row) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public void printMatrix() {
+        printMatrix(this.matrix);
+    }
+
+    public float findMaximum() {
+        float max = matrix[0][0];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] > max) {
+                    max = matrix[i][j];
+                }
+            }
+        }
+        return max;
+    }
+
+    public float calculateAverage() {
+        float sum = 0;
+        int totalElements = rows * cols;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                sum += matrix[i][j];
+            }
+        }
+        return sum / totalElements;
+    }
+
+    public static void main(String[] args) {
+        Matrix firstMatrix = new Matrix();
+        firstMatrix.inputMatrix();
+        System.out.println("Matrix 1:");
+        firstMatrix.printMatrix();
+
+        int[][] arrayData = {{1, 2, 3}, {4, 5, 6}};
+        Matrix secondMatrix = new Matrix(arrayData);
+        System.out.println("\nMatrix 2:");
+        secondMatrix.printMatrix();
+
+        Matrix thirdMatrix = new Matrix(3, 2);
+        thirdMatrix.inputMatrix();
+        System.out.println("\nMatrix 3:");
+        thirdMatrix.printMatrix();
+
+        System.out.println("\nTranspose of Matrix 2:");
+        float[][] transposed = secondMatrix.calculateTranspose();
+        secondMatrix.printMatrix(transposed);
+
+        System.out.println("\nMultiplication of Matrix 2 and Matrix 3:");
+        float[][] product = secondMatrix.multiplyWith(thirdMatrix);
+        secondMatrix.printMatrix(product);
+
+        System.out.println("\nMaximum value in Matrix 2: " + secondMatrix.findMaximum());
+        System.out.println("Average value in Matrix 2: " + secondMatrix.calculateAverage());
+    }
+}

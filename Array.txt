@@ -1,0 +1,114 @@
+import java.util.Arrays;
+
+class Array {
+    private int[] elements;
+    private int size;
+
+    public Array() {
+        this.size = 10;
+        this.elements = new int[size];
+    }
+
+    public Array(int size) {
+        this.size = size;
+        this.elements = new int[size];
+    }
+
+    public Array(int[] inputData) {
+        this.size = inputData.length;
+        this.elements = Arrays.copyOf(inputData, size);
+    }
+
+    public void reverse() {
+        for (int i = 0; i < size / 2; i++) {
+            int temp = elements[i];
+            elements[i] = elements[size - 1 - i];
+            elements[size - 1 - i] = temp;
+        }
+    }
+
+    public int getMax() {
+        int max = elements[0];
+        for (int i = 1; i < size; i++) {
+            if (elements[i] > max) {
+                max = elements[i];
+            }
+        }
+        return max;
+    }
+
+    public int getAverage() {
+        int sum = 0;
+        for (int num : elements) {
+            sum += num;
+        }
+        return sum / size;
+    }
+
+    public void sort() {
+        for (int i = 0; i < size - 1; i++) {
+            for (int j = 0; j < size - 1 - i; j++) {
+                if (elements[j] > elements[j + 1]) {
+                    int temp = elements[j];
+                    elements[j] = elements[j + 1];
+                    elements[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public void display() {
+        for (int num : elements) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    public int search(int value) {
+        for (int i = 0; i < size; i++) {
+            if (elements[i] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public static void main(String[] args) {
+        Array defaultArray = new Array();
+        System.out.println("Default Array:");
+        defaultArray.display();
+        System.out.println("Size: " + defaultArray.getSize());
+
+        Array customSizeArray = new Array(5);
+        System.out.println("\nCustom Size Array:");
+        customSizeArray.display();
+
+        int[] data = {12, 34, 56, 78, 90};
+        Array initializedArray = new Array(data);
+        System.out.println("\nInitialized Array:");
+        initializedArray.display();
+
+        System.out.println("\nReversing Initialized Array:");
+        initializedArray.reverse();
+        initializedArray.display();
+
+        System.out.println("\nMaximum Element: " + initializedArray.getMax());
+        System.out.println("Average: " + initializedArray.getAverage());
+
+        System.out.println("\nSorting Initialized Array:");
+        initializedArray.sort();
+        initializedArray.display();
+
+        int searchValue = 56;
+        int foundIndex = initializedArray.search(searchValue);
+        if (foundIndex != -1) {
+            System.out.println("\nValue " + searchValue + " found at index: " + foundIndex);
+        } else {
+            System.out.println("\nValue " + searchValue + " not found.");
+        }
+    }
+}

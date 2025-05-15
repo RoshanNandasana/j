@@ -1,0 +1,61 @@
+class BillInfo<T extends Number> {
+    private String billTitle;
+    private T totalValue;
+    private T reduction;
+
+    public BillInfo(String billTitle, T totalValue, T reduction) {
+        this.billTitle = billTitle;
+        this.totalValue = totalValue;
+        this.reduction = reduction;
+    }
+
+    public String getBillTitle() {
+        return billTitle;
+    }
+
+    public void setBillTitle(String billTitle) {
+        this.billTitle = billTitle;
+    }
+
+    public T getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(T totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public T getReduction() {
+        return reduction;
+    }
+
+    public void setReduction(T reduction) {
+        this.reduction = reduction;
+    }
+
+    public double calculateNetAmount() {
+        double value = totalValue.doubleValue();
+        double discount = reduction.doubleValue();
+        return value - discount;
+    }
+}
+
+public class BillingSystem {
+    public static void main(String[] args) {
+        BillInfo<Integer> bill1 = new BillInfo<>("BillA", 1000, 150);
+        BillInfo<Double> bill2 = new BillInfo<>("BillB", 2000.5, 300.75);
+
+        System.out.println("Bill Details:");
+        System.out.println("-------------");
+        System.out.println("First Bill:");
+        System.out.println("Title: " + bill1.getBillTitle());
+        System.out.println("Original Amount: " + bill1.getTotalValue());
+        System.out.println("Discount Applied: " + bill1.getReduction());
+        System.out.println("Net Amount: " + bill1.calculateNetAmount());
+        System.out.println("\nSecond Bill:");
+        System.out.println("Title: " + bill2.getBillTitle());
+        System.out.println("Original Amount: " + bill2.getTotalValue());
+        System.out.println("Discount Applied: " + bill2.getReduction());
+        System.out.println("Net Amount: " + bill2.calculateNetAmount());
+    }
+}
